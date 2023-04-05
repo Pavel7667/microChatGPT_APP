@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * MessageAdapter is Adapter class for RecyclerView items
+ */
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
 
     List<Message> messageList;
@@ -46,6 +49,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         return messageList.size();
     }
 
+    /**
+     * Inner class with fields
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout leftChatView;
@@ -53,6 +59,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         TextView leftTextChatView;
         TextView rightTextChatView;
 
+        /**
+         * MyViewHolder connect JAVA fields with XML id
+         */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             leftChatView = itemView.findViewById(R.id.left_chat_view);
