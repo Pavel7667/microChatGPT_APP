@@ -97,10 +97,7 @@ public class MainActivity extends AppCompatActivity {
      * @param questions text that sending from chat
      */
     void callAPI(String questions) {
-
         messageList.add(new Message("Typing >>>",Message.SENT_BY_BOT));
-
-
 
         // okhttp create jsonBody
         JSONObject jsonBody = new JSONObject();
