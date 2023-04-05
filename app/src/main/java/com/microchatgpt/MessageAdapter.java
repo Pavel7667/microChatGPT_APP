@@ -38,7 +38,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             holder.rightChatView.setVisibility(View.VISIBLE);
             holder.rightTextChatView.setText(message.getMessage());
         } else {
-            holder.rightTextChatView.setVisibility(View.GONE);
+            holder.rightChatView.setVisibility(View.GONE);
             holder.leftChatView.setVisibility(View.VISIBLE);
             holder.leftTextChatView.setText(message.getMessage());
         }

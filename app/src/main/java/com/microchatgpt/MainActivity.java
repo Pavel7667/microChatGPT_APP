@@ -115,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
         // create Request using jsonBody / URL / API_KEY
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
-                .url("POST https://api.openai.com/v1/completions")
-                .header("Authorization", "Bearer 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")
+                .url("https://api.openai.com/v1/completions")
+                .header("Authorization", "Bearer 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")
                 .post(body)
                 .build();
 
@@ -135,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
                         jsonObject = new JSONObject(response.body().string());
                         JSONArray jsonArray = jsonObject.getJSONArray("choices");
                         String result = jsonArray.getJSONObject(0).getString("text");
-                        addResponse(result);
+                        addResponse(result.trim());
                     } catch (JSONException e) {
                          e.printStackTrace();
                     }
                 } else {
-                    addResponse("Failed to give Response, case->" + response.body().toString());
+                    addResponse("Failed to give Response, case->" + response.body().string());
                 }
             }
         });
