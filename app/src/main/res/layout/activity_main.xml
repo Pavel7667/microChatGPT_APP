@@ -36,6 +36,7 @@
             android:layout_toLeftOf="@+id/send_btn"
             android:background="@drawable/rounded_corner"
             android:hint="Write here"
+            android:textColor="@color/black"
             android:padding="16dp" />
 
         <ImageButton
