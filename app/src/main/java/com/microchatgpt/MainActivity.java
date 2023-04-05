@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
      * @param response from API
      */
     void addResponse(String response) {
+        messageList.remove(messageList.size() - 1);
         addToChat(response, Message.SENT_BY_BOT);
     }
 
@@ -96,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
      * @param questions text that sending from chat
      */
     void callAPI(String questions) {
+
+        messageList.add(new Message("Typing >>>",Message.SENT_BY_BOT));
+
+
+
         // okhttp create jsonBody
         JSONObject jsonBody = new JSONObject();
         try {
@@ -126,10 +132,10 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     JSONObject jsonObject = null;
                     try {
-                        jsonObject = new JSONObject(response.body().toString());
+                        jsonObject = new JSONObject(response.body().string());
                         JSONArray jsonArray = jsonObject.getJSONArray("choices");
                         String result = jsonArray.getJSONObject(0).getString("text");
-                        addResponse(result.trim());
+                        addResponse(result);
                     } catch (JSONException e) {
                          e.printStackTrace();
                     }
