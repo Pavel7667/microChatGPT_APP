@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient.Builder()
-            .readTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS)
             .build();
 
 
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Send to Activity text as Bot
+     *
      * @param response from API
      */
     void addResponse(String response) {
@@ -97,28 +98,31 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Do Request to API and get Response back into String
+     *
      * @param questions text that sending from chat
      */
     void callAPI(String questions) {
 
-        messageList.add(new Message("Typing >>>",Message.SENT_BY_BOT));
-
+        messageList.add(new Message("Typing >>>", Message.SENT_BY_BOT));
 
 
         // okhttp create jsonBody
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("model", "text-davinci-003");
-            jsonBody.put("prompt", questions);
-            jsonBody.put("max_tokens", 4000);
-            jsonBody.put("temperature", 0);
+            jsonBody.put("model", "gpt-3.5-turbo");
+            JSONArray jsonArray = new JSONArray();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("role", "user");
+            jsonObject.put("content", questions);
+            jsonArray.put(jsonObject);
+            jsonBody.put("messages", jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         // create Request using jsonBody / URL / API_KEY
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
-                .url("https://api.openai.com/v1/completions")
+                .url("https://api.openai.com/v1/chat/completions")
                 .header("Authorization", "Bearer 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")
                 .post(body)
                 .build();
@@ -137,10 +141,11 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         jsonObject = new JSONObject(response.body().string());
                         JSONArray jsonArray = jsonObject.getJSONArray("choices");
-                        String result = jsonArray.getJSONObject(0).getString("text");
+                        String result = jsonArray.getJSONObject(0).
+                                getJSONObject("message").getString("content");
                         addResponse(result.trim());
                     } catch (JSONException e) {
-                         e.printStackTrace();
+                        e.printStackTrace();
                     }
                 } else {
                     addResponse("Failed to give Response, case->" + response.body().string());
